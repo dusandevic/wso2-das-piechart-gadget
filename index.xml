@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="Piechart" height="250" description="Piechart Gadget">
+        <Require feature="dynamic-height"/>
+    </ModulePrefs>
+    <Content type="html">
+        <![CDATA[
+        <head>
+            <style type="text/css">
+                
+            </style>
+            <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
+            <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
+            <script>
+                $(function(){
+                    $.ajax({
+                        dataType: "json",
+                        url: "https://localhost:9443/analytics/tables/DUSANTESTSTREAM",             
+                        "headers": {
+                            "authorization": "Basic YWRtaW46YWRtaW4=",
+                            "cache-control": "no-cache",                           
+                          },     
+                        success: function(data){                    
+                            var dasData = [];
+
+                            $.each(data, function(i, val){
+                                dasData.push({ "city" : val.values.city, "population" : val.values.population });
+                            });
+
+                            var myLabels = [];
+                            var myValues = [];
+
+                            $.each(dasData, function(i, v){
+                                myLabels.push(v.city);
+                            })
+
+                            $.each(dasData, function(i, v){
+                                myValues.push(v.population);
+                            })        
+
+                            var pieData = {
+                                    labels: myLabels,
+                                    datasets: [
+                                        {
+                                            data: myValues,
+                                            backgroundColor: [
+                                                "red",
+                                                "#36A2EB",
+                                                "#FFCE56",
+                                                "green",
+                                                "blue",
+                                                "gold",
+                                                "silver",
+                                                "#FF6384",
+                                                "yellow",
+                                                "darkred"
+                                            ],                 
+                                        }]
+                                };                                                        
+
+                            var ctx = $("#pieChart");
+                            var myPieChart = new Chart(ctx,{
+                                type: 'doughnut',
+                                data: pieData,
+                                options: {
+                                    title: {
+                                        display: true,
+                                        text: 'Custom WSO2 Pie Chart'
+                                    }
+                                }                                
+                            });
+                            
+                        }
+                    });
+                });
+            </script>
+        <head>
+        <body>
+            <canvas id="pieChart" width="400" height="400"></canvas>
+        </body>
+        ]]>
+    </Content>
+</Module>

@@ -1,0 +1,13 @@
+{
+    "id": "yenlo-piechart",
+    "title": "Pie Chart",
+    "type": "gadget",
+    "thumbnail": "local://images/gadgetIcon.png",
+    "data": {
+        "url": "store://gadget/piechart/index.xml"
+    },
+    "styles": {
+        "borders": false,
+        "title": false
+    } 
+}
